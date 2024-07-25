@@ -3,18 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'cubit/counter_cubit.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  final counterCubit = CounterCubit();
-
-  @override
   Widget build(BuildContext context) {
+    final counterCubit = BlocProvider.of<CounterCubit>(context);
     return BlocBuilder<CounterCubit, int>(
         bloc: counterCubit,
         builder: (context, counter) {
@@ -30,21 +24,46 @@ class _HomePageState extends State<HomePage> {
                       fontSize: 30.0,
                       fontWeight: FontWeight.bold),
                 ),
-                ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.amber),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.amber),
+                        ),
+                        onPressed: () {
+                          counterCubit.increment();
+                        },
+                        child: const Text(
+                          'Increment',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0,
+                              fontFamily: 'SourceCodePro'),
+                        )),
+                    const SizedBox(
+                      width: 10.0,
                     ),
-                    onPressed: () {
-                      counterCubit.increment();
-                    },
-                    child: const Text(
-                      'Increment',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.0,
-                          fontFamily: 'SourceCodePro'),
-                    )),
+                    ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.amber),
+                        ),
+                        onPressed: () {
+                          counterCubit.decrement();
+                        },
+                        child: const Text(
+                          'Decrement',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0,
+                              fontFamily: 'SourceCodePro'),
+                        )),
+                  ],
+                ),
               ],
             ),
           );
