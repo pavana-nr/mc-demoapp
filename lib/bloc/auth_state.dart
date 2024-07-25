@@ -10,7 +10,7 @@ final class AuthLoading extends AuthState {}
 final class AuthSuccess extends AuthState {
   final String uid;
 
-  AuthSuccess(this.uid);
+  AuthSuccess({required this.uid});
 }
 
 final class AuthFailure extends AuthState {

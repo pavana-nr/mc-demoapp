@@ -19,7 +19,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           return emit(
               AuthFailure('Password must be at least 6 characters long'));
         }
-        emit(AuthSuccess('uid'));
+        emit(AuthSuccess(uid: '$email- $password'));
+      } catch (e) {
+        return emit(AuthFailure(e.toString()));
+      }
+    });
+    on<AuthLogoutRequested>((event, emit) async {
+      emit(AuthInitial());
+      try {
+        await Future.delayed(const Duration(seconds: 1));
+        emit(AuthInitial());
       } catch (e) {
         return emit(AuthFailure(e.toString()));
       }
